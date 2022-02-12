@@ -10,7 +10,7 @@ module default {
     required property cost_per_ton := (
       with projects := .<portfolio[is PortfolioProject]
       select 1 / sum(projects.percentage * projects.project.cost_per_ton)
-    )
+    );
   }
 
   type PortfolioProject {
