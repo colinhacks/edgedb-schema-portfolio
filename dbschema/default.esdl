@@ -1,15 +1,15 @@
 module default {
   type Project {
     required property name -> str;
-    multi link portfolios := .<project[is PortfolioProject];
-    required property cost -> int64;
+    required property cost_per_ton -> int32;
+    property description -> str;
   }
 
   type Portfolio {
-    multi link projects := (select .<portfolio[is PortfolioProject]);
+    required property name -> str;
     required property cost_per_ton := (
       with projects := .<portfolio[is PortfolioProject]
-      select projects.percentage * projects.project.cost
+      select 1 / sum(projects.percentage * projects.project.cost_per_ton)
     )
   }
 
